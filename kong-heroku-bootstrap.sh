@@ -46,13 +46,13 @@ setup_kong() {
     echo "Configured Kong Manager URL: $KONG_ADMIN_GUI_URL"
 
     # Configure Admin API URI - required
-    if [ -z "$KONG_ADMIN_API_URI" ]; then
-        echo "Error: KONG_ADMIN_API_URI environment variable is not set"
-        echo "Please set KONG_ADMIN_API_URI to the external Admin API URL (e.g., https://admin-api.example.com)"
+    if [ -z "$KONG_ADMIN_GUI_API_URL" ]; then
+        echo "Error: KONG_ADMIN_GUI_API_URL environment variable is not set"
+        echo "Please set KONG_ADMIN_GUI_API_URL to the external Admin API URL (e.g., https://admin-api.example.com)"
         exit 1
     fi
-    export KONG_ADMIN_API_URI
-    echo "Configured Kong Admin API URI: $KONG_ADMIN_API_URI"
+    export KONG_ADMIN_GUI_API_URL
+    echo "Configured Kong Admin API URI: $KONG_ADMIN_GUI_API_URL"
 
     # Validate Kong Manager credentials
     if [ -z "$KONG_ADMIN_GUI_USERNAME" ] || [ -z "$KONG_ADMIN_GUI_PASSWORD" ]; then

@@ -16,7 +16,7 @@
       "description": "Verify SSL certificate",
       "value": "off"
     },
-    "KONG_ADMIN_API_URI": {
+    "KONG_ADMIN_GUI_API_URL": {
       "description": "Kong Admin API URL",
       "value": "https://ab-cr-kong-admin.herokuapp.com"
     },
