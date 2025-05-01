@@ -37,12 +37,12 @@ setup_kong() {
     # export KONG_ADMIN_GUI_LISTEN="0.0.0.0:$PORT"
     # echo "Configured Kong GUI to listen on: $KONG_ADMIN_GUI_LISTEN"
 
-    if [ -z "$KONG_ADMIN_GUI_URL" ]; then
-        echo "Error: KONG_ADMIN_GUI_URL environment variable is not set"
-        echo "Please set KONG_ADMIN_GUI_URL to your app URL (e.g., https://my-kong-manager.herokuapp.com)"
-        exit 1
-    fi
-    export KONG_ADMIN_GUI_URL="$KONG_ADMIN_GUI_URL:$PORT"
+    # if [ -z "$KONG_ADMIN_GUI_URL" ]; then
+    #     echo "Error: KONG_ADMIN_GUI_URL environment variable is not set"
+    #     echo "Please set KONG_ADMIN_GUI_URL to your app URL (e.g., https://my-kong-manager.herokuapp.com)"
+    #     exit 1
+    # fi
+    export KONG_ADMIN_GUI_URL="$(hostname -I):$PORT"
     echo "Configured Kong Manager URL: $KONG_ADMIN_GUI_URL"
 
     # Configure Admin API URI - required
@@ -52,7 +52,7 @@ setup_kong() {
         exit 1
     fi
     export KONG_ADMIN_GUI_API_URL
-    echo "Configured Kong Admin API URI: $KONG_ADMIN_GUI_API_URL"
+    echo "Configured Kong Admin API URL: $KONG_ADMIN_GUI_API_URL"
 
     # Validate Kong Manager credentials
     if [ -z "$KONG_ADMIN_GUI_USERNAME" ] || [ -z "$KONG_ADMIN_GUI_PASSWORD" ]; then
