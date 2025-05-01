@@ -42,7 +42,7 @@ setup_kong() {
     #     echo "Please set KONG_ADMIN_GUI_URL to your app URL (e.g., https://my-kong-manager.herokuapp.com)"
     #     exit 1
     # fi
-    export KONG_ADMIN_GUI_URL="$(hostname -I | awk '{print $1}'):$PORT"
+    export KONG_ADMIN_GUI_URL="http://$(hostname -I | awk '{print $1}'):$PORT"
     echo "Configured Kong Manager URL: $KONG_ADMIN_GUI_URL"
 
     # Configure Admin API URI - required
