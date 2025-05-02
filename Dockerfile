@@ -12,6 +12,9 @@ USER root
 COPY kong-heroku-bootstrap.sh /kong-heroku-bootstrap.sh
 RUN chmod +x /kong-heroku-bootstrap.sh
 
+# To access Kong Manager OSS from a remote machine, ensure that admin_listen and admin_gui_listen are binding to 0.0.0.0 rather than 127.0.0.1
+# https://github.com/Kong/kong-manager?tab=readme-ov-file#server-usage
+
 # Set environment variables
 ENV KONG_DATABASE=off \
     KONG_PG_SSL=on \
