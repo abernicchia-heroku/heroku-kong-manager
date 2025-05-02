@@ -20,7 +20,7 @@ ENV KONG_DATABASE=postgres \
     KONG_ADMIN_ACCESS_LOG=/dev/stdout \
     KONG_PROXY_ERROR_LOG=/dev/stderr \
     KONG_ADMIN_ERROR_LOG=/dev/stderr \
-    KONG_ADMIN_LISTEN=off \
+    KONG_ADMIN_LISTEN=0.0.0.0:8001 \
     PORT=8002
 
 # Expose port (default, will be overridden by Heroku)

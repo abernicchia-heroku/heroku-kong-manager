@@ -39,7 +39,7 @@
     },
     "KONG_ADMIN_LISTEN": {
       "description": "Admin API listen configuration",
-      "value": "0.0.0.0:${PORT}"
+      "value": "0.0.0.0:8001"
     },
     "KONG_DECLARATIVE_CONFIG": {
       "description": "Path to declarative configuration file",
