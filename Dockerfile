@@ -13,13 +13,15 @@ COPY kong-heroku-bootstrap.sh /kong-heroku-bootstrap.sh
 RUN chmod +x /kong-heroku-bootstrap.sh
 
 # Set environment variables
-ENV KONG_DATABASE=postgres \
+ENV KONG_DATABASE=off \
     KONG_PG_SSL=on \
     KONG_PG_SSL_VERIFY=off \
     KONG_PROXY_ACCESS_LOG=/dev/stdout \
     KONG_ADMIN_ACCESS_LOG=/dev/stdout \
+    KONG_ADMIN_GUI_ACCESS_LOG=/dev/stdout \
     KONG_PROXY_ERROR_LOG=/dev/stderr \
     KONG_ADMIN_ERROR_LOG=/dev/stderr \
+    KONG_ADMIN_GUI_ERROR_LOG=/dev/stderr \
     KONG_ADMIN_LISTEN=0.0.0.0:8001 \
     PORT=8002
 
