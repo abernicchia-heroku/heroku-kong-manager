@@ -34,8 +34,9 @@ setup_kong() {
         echo "Error: PORT environment variable is not set"
         exit 1
     fi
-    # export KONG_ADMIN_GUI_LISTEN="0.0.0.0:$PORT"
-    # echo "Configured Kong GUI to listen on: $KONG_ADMIN_GUI_LISTEN"
+    
+    export KONG_ADMIN_GUI_LISTEN="0.0.0.0:$PORT"
+    echo "Configured Kong GUI to listen on: $KONG_ADMIN_GUI_LISTEN"
 
     # if [ -z "$KONG_ADMIN_GUI_URL" ]; then
     #     echo "Error: KONG_ADMIN_GUI_URL environment variable is not set"
