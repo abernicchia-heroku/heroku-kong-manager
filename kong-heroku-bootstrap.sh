@@ -1,32 +1,32 @@
 #!/bin/sh
 set -e
 
-parse_database_url() {
-    echo "Parsing DATABASE_URL ..."
-    # Extract each component using cut and sed
-    userpass=$(echo "$DATABASE_URL" | sed -e "s|postgres://\([^@]*\)@.*|\1|")
-    hostport=$(echo "$DATABASE_URL" | sed -e "s|postgres://[^@]*@\([^/]*\)/.*|\1|")
-    dbname=$(echo "$DATABASE_URL" | sed -e "s|postgres://[^@]*@[^/]*/\(.*\)|\1|")
+# parse_database_url() {
+#     echo "Parsing DATABASE_URL ..."
+#     # Extract each component using cut and sed
+#     userpass=$(echo "$DATABASE_URL" | sed -e "s|postgres://\([^@]*\)@.*|\1|")
+#     hostport=$(echo "$DATABASE_URL" | sed -e "s|postgres://[^@]*@\([^/]*\)/.*|\1|")
+#     dbname=$(echo "$DATABASE_URL" | sed -e "s|postgres://[^@]*@[^/]*/\(.*\)|\1|")
     
-    # Split userpass into username and password
-    export KONG_PG_USER=$(echo "$userpass" | cut -d: -f1)
-    export KONG_PG_PASSWORD=$(echo "$userpass" | cut -d: -f2)
+#     # Split userpass into username and password
+#     export KONG_PG_USER=$(echo "$userpass" | cut -d: -f1)
+#     export KONG_PG_PASSWORD=$(echo "$userpass" | cut -d: -f2)
     
-    # Split hostport into host and port
-    export KONG_PG_HOST=$(echo "$hostport" | cut -d: -f1)
-    export KONG_PG_PORT=$(echo "$hostport" | cut -d: -f2)
+#     # Split hostport into host and port
+#     export KONG_PG_HOST=$(echo "$hostport" | cut -d: -f1)
+#     export KONG_PG_PORT=$(echo "$hostport" | cut -d: -f2)
     
-    # Set database name
-    export KONG_PG_DATABASE="$dbname"
+#     # Set database name
+#     export KONG_PG_DATABASE="$dbname"
     
-    # Debug output
-    echo "Parsed database configuration:"
-    echo "KONG_PG_USER=$KONG_PG_USER"
-    echo "KONG_PG_PASSWORD=<redacted>"
-    echo "KONG_PG_HOST=$KONG_PG_HOST"
-    echo "KONG_PG_PORT=$KONG_PG_PORT"
-    echo "KONG_PG_DATABASE=$KONG_PG_DATABASE"
-}
+#     # Debug output
+#     echo "Parsed database configuration:"
+#     echo "KONG_PG_USER=$KONG_PG_USER"
+#     echo "KONG_PG_PASSWORD=<redacted>"
+#     echo "KONG_PG_HOST=$KONG_PG_HOST"
+#     echo "KONG_PG_PORT=$KONG_PG_PORT"
+#     echo "KONG_PG_DATABASE=$KONG_PG_DATABASE"
+# }
 
 setup_kong() {
     # Ensure PORT is set and configure admin listening
@@ -44,12 +44,9 @@ setup_kong() {
         exit 1
     fi
 
-    #export KONG_ADMIN_GUI_URL="http://$(hostname -I | awk '{print $1}'):$PORT"
-
-    #export KONG_ADMIN_GUI_URL="http://$(hostname | awk '{print $1}').prvt.dyno.rt.heroku.com:$PORT, http://$(hostname | awk '{print $1}').int.dyno.rt.heroku.com:$PORT"
     echo "Configured Kong Manager URL: $KONG_ADMIN_GUI_URL"
 
-    # Configure Admin API URI - required
+    # Configure Admin API URL - required
     if [ -z "$KONG_ADMIN_GUI_API_URL" ]; then
         echo "Error: KONG_ADMIN_GUI_API_URL environment variable is not set"
         echo "Please set KONG_ADMIN_GUI_API_URL to the external Admin API URL (e.g., https://admin-api.example.com)"
@@ -58,51 +55,46 @@ setup_kong() {
     export KONG_ADMIN_GUI_API_URL
     echo "Configured Kong Admin API URL: $KONG_ADMIN_GUI_API_URL"
 
-    # Validate Kong Manager credentials
-    if [ -z "$KONG_ADMIN_GUI_USERNAME" ] || [ -z "$KONG_ADMIN_GUI_PASSWORD" ]; then
-        echo "Error: Kong Manager credentials are not set"
-        echo "Please set both KONG_ADMIN_GUI_USERNAME and KONG_ADMIN_GUI_PASSWORD environment variables"
-        exit 1
-    fi
-    echo "Kong Manager credentials configured"
 }
 
-run_migrations() {
-    echo "Running database migrations..."
-    kong migrations bootstrap --force
-    if [ $? -eq 0 ]; then
-        echo "Migrations completed successfully"
-    else
-        echo "Error: Failed to run migrations"
-        exit 1
-    fi
-}
+# run_migrations() {
+#     echo "Running database migrations..."
+#     kong migrations bootstrap --force
+#     if [ $? -eq 0 ]; then
+#         echo "Migrations completed successfully"
+#     else
+#         echo "Error: Failed to run migrations"
+#         exit 1
+#     fi
+# }
 
-if [ -n "$DATABASE_URL" ]; then
-    echo "DATABASE_URL is set, attempting to parse..."
-    parse_database_url
+# if [ -n "$DATABASE_URL" ]; then
+#     echo "DATABASE_URL is set, attempting to parse..."
+#     parse_database_url
     
-    # Verify all required variables are set
-    if [ -z "$KONG_PG_USER" ] || [ -z "$KONG_PG_PASSWORD" ] || \
-       [ -z "$KONG_PG_HOST" ] || [ -z "$KONG_PG_PORT" ] || \
-       [ -z "$KONG_PG_DATABASE" ]; then
-        echo "Error: Failed to parse one or more database connection parameters"
-        echo "Please ensure DATABASE_URL is in the format: postgres://user:password@host:port/dbname"
-        exit 1
-    fi
+#     # Verify all required variables are set
+#     if [ -z "$KONG_PG_USER" ] || [ -z "$KONG_PG_PASSWORD" ] || \
+#        [ -z "$KONG_PG_HOST" ] || [ -z "$KONG_PG_PORT" ] || \
+#        [ -z "$KONG_PG_DATABASE" ]; then
+#         echo "Error: Failed to parse one or more database connection parameters"
+#         echo "Please ensure DATABASE_URL is in the format: postgres://user:password@host:port/dbname"
+#         exit 1
+#     fi
     
-    setup_kong
-    echo "Successfully configured Kong"
+#     setup_kong
+#     echo "Successfully configured Kong"
 
-    # Run migrations if APP_RUN_KONG_MIGRATIONS is set to true
-    if [ "$APP_RUN_KONG_MIGRATIONS" = "true" ]; then
-        run_migrations
-    fi
-else
-    echo "Error: DATABASE_URL not set"
-    exit 1
-fi
+#     # Run migrations if APP_RUN_KONG_MIGRATIONS is set to true
+#     if [ "$APP_RUN_KONG_MIGRATIONS" = "true" ]; then
+#         run_migrations
+#     fi
+# else
+#     echo "Error: DATABASE_URL not set"
+#     exit 1
+# fi
 
+setup_kong
+echo "Successfully configured Kong"
 
 # Execute the original entrypoint script
 exec /docker-entrypoint.sh "$@" 
