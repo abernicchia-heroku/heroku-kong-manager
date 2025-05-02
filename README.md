@@ -10,9 +10,10 @@ The author of this article makes any warranties about the completeness, reliabil
 
 ## Prerequisites
 
+- A Heroku account
 - Heroku CLI installed
 - Docker installed (for local development)
-- A Heroku account
+
 
 ## Deployment Steps
 
@@ -65,7 +66,7 @@ heroku logs --tail
 
 You should see messages indicating that Kong has started successfully and is listening for requests.
 
-Then you can open your Heorku app that should show the Kong Manager GUI.
+Then you can open your Heorku app showing the Kong Manager GUI.
 
 
 ## Contributing
