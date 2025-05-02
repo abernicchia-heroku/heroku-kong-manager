@@ -38,15 +38,15 @@ setup_kong() {
     export KONG_ADMIN_GUI_LISTEN="0.0.0.0:$PORT"
     echo "Configured Kong GUI to listen on: $KONG_ADMIN_GUI_LISTEN"
 
-    # if [ -z "$KONG_ADMIN_GUI_URL" ]; then
-    #     echo "Error: KONG_ADMIN_GUI_URL environment variable is not set"
-    #     echo "Please set KONG_ADMIN_GUI_URL to your app URL (e.g., https://my-kong-manager.herokuapp.com)"
-    #     exit 1
-    # fi
+    if [ -z "$KONG_ADMIN_GUI_URL" ]; then
+        echo "Error: KONG_ADMIN_GUI_URL environment variable is not set"
+        echo "Please set KONG_ADMIN_GUI_URL to your app URL (e.g., https://my-kong-manager.herokuapp.com)"
+        exit 1
+    fi
 
     #export KONG_ADMIN_GUI_URL="http://$(hostname -I | awk '{print $1}'):$PORT"
 
-    export KONG_ADMIN_GUI_URL="http://$(hostname | awk '{print $1}').prvt.dyno.rt.heroku.com:$PORT, http://$(hostname | awk '{print $1}').int.dyno.rt.heroku.com:$PORT"
+    #export KONG_ADMIN_GUI_URL="http://$(hostname | awk '{print $1}').prvt.dyno.rt.heroku.com:$PORT, http://$(hostname | awk '{print $1}').int.dyno.rt.heroku.com:$PORT"
     echo "Configured Kong Manager URL: $KONG_ADMIN_GUI_URL"
 
     # Configure Admin API URI - required
