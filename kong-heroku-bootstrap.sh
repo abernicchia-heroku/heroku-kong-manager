@@ -35,6 +35,8 @@ setup_kong() {
         exit 1
     fi
     
+    # To access Kong Manager OSS from a remote machine, ensure that admin_listen and admin_gui_listen are binding to 0.0.0.0 rather than 127.0.0.1
+    # https://github.com/Kong/kong-manager?tab=readme-ov-file#server-usage
     export KONG_ADMIN_GUI_LISTEN="0.0.0.0:$PORT"
     echo "Configured Kong GUI to listen on: $KONG_ADMIN_GUI_LISTEN"
 
