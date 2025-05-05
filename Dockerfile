@@ -17,8 +17,6 @@ RUN chmod +x /kong-heroku-bootstrap.sh
 
 # Set environment variables
 ENV KONG_DATABASE=off \
-    KONG_PG_SSL=on \
-    KONG_PG_SSL_VERIFY=off \
     KONG_PROXY_ACCESS_LOG=/dev/stdout \
     KONG_ADMIN_ACCESS_LOG=/dev/stdout \
     KONG_ADMIN_GUI_ACCESS_LOG=/dev/stdout \
