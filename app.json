@@ -11,9 +11,6 @@
   "success_url": "/",
   "addons": [
     {
-      "plan": "heroku-postgresql:standard-0"
-    },
-    {
       "plan": "papertrail:choklad"
     }
   ],
