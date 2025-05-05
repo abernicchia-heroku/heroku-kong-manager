@@ -33,7 +33,6 @@ The following environment variables are required for this app to run (see `app.j
 
 - `KONG_ADMIN_GUI_URL` (required): Public URL for Kong Manager GUI (e.g., https://my-kong-manager.herokuapp.com)
 - `KONG_ADMIN_GUI_API_URL` (required): External Admin API URL (e.g., https://admin-api.example.com)
-- `KONG_ADMIN_GUI_LISTEN`: Set automatically by the bootstrap script to `0.0.0.0:$PORT`
 
 
 ## ⚠️ Security Notice
