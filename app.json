@@ -24,7 +24,7 @@
       "required": true
     },
     "KONG_ADMIN_GUI_API_URL": {
-      "description": "External Admin API URL (e.g., https://admin-api.example.com)",
+      "description": "External Admin API URL, without any trailing slash (e.g., https://admin-api.example.com)",
       "required": true
     }
   },
